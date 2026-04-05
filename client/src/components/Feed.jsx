@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import io from 'socket.io-client'
 
-const socket = io('http://localhost:5000')
+const socket = io('https://disaster-aid-hnwq.onrender.com')
 
 const urgency = {
   low: { color: '#10b981', bg: 'rgba(16,185,129,0.1)', border: 'rgba(16,185,129,0.2)' },
@@ -29,7 +29,7 @@ function NeedCard({ n, onUpdate, onDelete }) {
   const u = urgency[n.urgency] || urgency.medium
 
   const saveEdit = async () => {
-    await axios.patch(`http://localhost:5000/api/needs/${n._id}`, editForm)
+    await axios.patch(`https://disaster-aid-hnwq.onrender.com/api/needs/${n._id}`, editForm)
     setEditing(false)
   }
 
@@ -107,7 +107,7 @@ function OfferCard({ o, onDelete }) {
   const [editForm, setEditForm] = useState({ description: o.description, capacity: o.capacity || '' })
 
   const saveEdit = async () => {
-    await axios.patch(`http://localhost:5000/api/offers/${o._id}`, editForm)
+    await axios.patch(`https://disaster-aid-hnwq.onrender.com/api/offers/${o._id}`, editForm)
     setEditing(false)
   }
 
@@ -169,7 +169,7 @@ export default function Feed() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    Promise.all([axios.get('http://localhost:5000/api/needs'), axios.get('http://localhost:5000/api/offers')])
+    Promise.all([axios.get('https://disaster-aid-hnwq.onrender.com/api/needs'), axios.get('https://disaster-aid-hnwq.onrender.com/api/offers')])
       .then(([n,o]) => { setNeeds(n.data); setOffers(o.data); setLoading(false) })
     socket.on('newNeed', n => setNeeds(p => [n,...p]))
     socket.on('newOffer', o => setOffers(p => [o,...p]))
@@ -177,17 +177,17 @@ export default function Feed() {
     return () => { socket.off('newNeed'); socket.off('newOffer'); socket.off('updateNeed') }
   }, [])
 
-  const updateStatus = (id, status) => axios.patch(`http://localhost:5000/api/needs/${id}/status`, { status })
+  const updateStatus = (id, status) => axios.patch(`https://disaster-aid-hnwq.onrender.com/api/needs/${id}/status`, { status })
 
   const deleteNeed = async (id) => {
     if (!confirm('Delete this need?')) return
-    await axios.delete(`http://localhost:5000/api/needs/${id}`)
+    await axios.delete(`https://disaster-aid-hnwq.onrender.com/api/needs/${id}`)
     setNeeds(p => p.filter(n => n._id !== id))
   }
 
   const deleteOffer = async (id) => {
     if (!confirm('Delete this offer?')) return
-    await axios.delete(`http://localhost:5000/api/offers/${id}`)
+    await axios.delete(`https://disaster-aid-hnwq.onrender.com/api/offers/${id}`)
     setOffers(p => p.filter(o => o._id !== id))
   }
 

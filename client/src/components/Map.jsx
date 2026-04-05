@@ -6,7 +6,7 @@ import axios from 'axios'
 import io from 'socket.io-client'
 import 'leaflet/dist/leaflet.css'
 
-const socket = io('http://localhost:5000')
+const socket = io('https://disaster-aid-hnwq.onrender.com')
 
 const needIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
@@ -38,8 +38,8 @@ function Map() {
 
   useEffect(() => {
     Promise.all([
-      axios.get('http://localhost:5000/api/needs'),
-      axios.get('http://localhost:5000/api/offers')
+      axios.get('https://disaster-aid-hnwq.onrender.com/api/needs'),
+      axios.get('https://disaster-aid-hnwq.onrender.com/api/offers')
     ]).then(([n, o]) => {
       setNeeds(n.data)
       setOffers(o.data)

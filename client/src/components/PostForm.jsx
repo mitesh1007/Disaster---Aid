@@ -49,7 +49,7 @@ function NeedForm() {
     setMlLoading(true)
     setMlResult(null)
     try {
-      const res = await axios.post('http://localhost:5000/api/ml/classify', { text })
+      const res = await axios.post('https://disaster-aid-hnwq.onrender.com/api/ml/classify', { text })
       setMlResult(res.data)
       setForm(f => ({ ...f, urgency: res.data.urgency }))
     } catch (err) {
@@ -71,7 +71,7 @@ function NeedForm() {
       const formData = new FormData()
       formData.append('data', JSON.stringify(data))
       if (photo) formData.append('photo', photo)
-      await axios.post('http://localhost:5000/api/needs', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      await axios.post('https://disaster-aid-hnwq.onrender.com/api/needs', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       setSuccess('Your need has been posted successfully.')
       setForm({ type: 'food', description: '', quantity: '', urgency: 'medium', postedBy: '', contact: '', lat: '', lng: '', address: '' })
       setPhoto(null)
@@ -225,7 +225,7 @@ function OfferForm() {
       const formData = new FormData()
       formData.append('data', JSON.stringify(data))
       if (photo) formData.append('photo', photo)
-      await axios.post('http://localhost:5000/api/offers', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      await axios.post('https://disaster-aid-hnwq.onrender.com/api/offers', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       setSuccess('Your offer is live. Nearby needs will be matched to you.')
       setForm({ type: 'food', description: '', capacity: '', postedBy: '', contact: '', lat: '', lng: '', address: '', availableUntil: '' })
       setPhoto(null)
